@@ -1,7 +1,5 @@
 import React from 'react'
 
-function App() {
+export default function PrivateApp() {
   return <div></div>
 }
-
-export default App
