@@ -9,7 +9,6 @@ export default function Navigation() {
         <CompanyLogo />
         <HamburgerIcon />
       </div>
-
       <div className={classes.secondPartOfNavigation}>
         <div className={classes.nameInitials}>
           <div>JD</div>
