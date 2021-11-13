@@ -1,16 +1,17 @@
-import Dropdown from 'components/Dropdown'
-import Navigation from 'components/Navigation'
 import React from 'react'
+import PrimaryDropdown from 'components/Dropdowns/PrimaryDropdown'
+import Navigation from 'components/Navigation'
+import CalendarDropdown from 'components/Dropdowns/CalendarDropdown'
 
 export default function PrivateApp() {
   return (
     <>
       <Navigation />
-      <Dropdown
-        initialOption="option2"
-        variant="calendar"
+      <PrimaryDropdown
         options={['option1', 'option3', 'option2']}
+        initialOption={'option1'}
       />
+      <CalendarDropdown />
     </>
   )
 }
