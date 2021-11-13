@@ -8,7 +8,7 @@ export default function PrivateApp() {
       <Navigation />
       <Dropdown
         initialOption="option2"
-        variant="primary"
+        variant="calendar"
         options={['option1', 'option3', 'option2']}
       />
     </>

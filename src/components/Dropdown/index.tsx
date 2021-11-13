@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import arrowIcon from 'assets/images/down-arrow.png'
 import calendarIcon from 'assets/images/calendar.png'
 import classes from './styles.module.scss'
+import PrimaryDropdown from './PrimaryDropdown'
+import CalendarDropdown from './CalendarDropdown'
 
 type variantType = 'primary' | 'calendar'
 
@@ -26,38 +28,34 @@ export default function Dropdown({
   const [isOpen, setIsOpen] = useState(isDropdownInitiallyOpen)
   const [selected, setSelected] = useState(initialOption)
 
-  const isPrimaryType = (variant: variantType): boolean =>
-    variant === VARIANT_TYPES.PRIMARY
+  const isPrimaryType = (): boolean => variant === VARIANT_TYPES.PRIMARY
+
+  const InitialDropdownButton = () => {
+    return (
+      <div>
+        <div className={classes.dropdownText}>{selected}</div>
+        <div className={classes.dropdownImageContainer}>
+          <img
+            alt="dropdown-icon"
+            src={isPrimaryType() ? arrowIcon : calendarIcon}
+          />
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className={classes.dropdown} onClick={() => setIsOpen(!isOpen)}>
       {!isOpen ? (
-        <div>
-          <div className={classes.dropdownText}>{selected}</div>
-          <div className={classes.dropdownImageContainer}>
-            <img
-              alt="dropdown-icon"
-              src={isPrimaryType(variant) ? arrowIcon : calendarIcon}
-            />
-          </div>
-        </div>
+        <InitialDropdownButton />
+      ) : isPrimaryType() ? (
+        <PrimaryDropdown
+          options={options}
+          selected={selected}
+          setSelected={setSelected}
+        />
       ) : (
-        <div>
-          {options
-            .reduce((acc: string[], option: string) => {
-              if (selected === option) return [selected, ...acc]
-              return [...acc, option]
-            }, [])
-            .map((option) => (
-              <div
-                className={classes.dropdownText}
-                key={option}
-                onClick={() => setSelected(option)}
-              >
-                {option}
-              </div>
-            ))}
-        </div>
+        <CalendarDropdown />
       )}
     </div>
   )
