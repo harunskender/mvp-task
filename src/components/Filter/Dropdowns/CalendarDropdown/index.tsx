@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, MouseEventHandler } from 'react'
+import React, { forwardRef, MouseEventHandler } from 'react'
 import calendarIcon from 'assets/images/calendar.png'
 import classes from '../styles.module.scss'
 import ReactDatePicker from 'react-datepicker'
