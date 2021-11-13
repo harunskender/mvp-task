@@ -6,20 +6,22 @@ import 'react-datepicker/dist/react-datepicker.css'
 interface CalendarDropdownProps {
   isDropdownInitiallyOpen?: boolean
   initialDate?: any
+  initialText?: string
+  onClick: (s: any) => void
+  selectedDate: Date | string
 }
 
 export default function CalendarDropdown({
-  isDropdownInitiallyOpen = false,
   initialDate,
+  initialText,
+  onClick,
+  selectedDate,
 }: CalendarDropdownProps) {
-  const [selectedDate, setSelectedDate] = useState(initialDate || new Date())
-
   return (
     <div className={classes.dropdown}>
       <ReactDatePicker
-        startDate={selectedDate}
         onChange={(e) => {
-          setSelectedDate(e)
+          onClick(e)
         }}
         customInput={<InitialDropdownButton selectedDate={selectedDate} />}
       />
