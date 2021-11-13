@@ -4,19 +4,18 @@ import classes from '../styles.module.scss'
 
 interface PrimaryDropdownProps {
   isDropdownInitiallyOpen?: boolean
-  initialOption: string
+  selected: string
   options: string[],
-  onClick:(s:string) => void
+  onClick:(s:string) => void,
 }
 
 export default function PrimaryDropdown({
   isDropdownInitiallyOpen = false,
-  initialOption,
+  selected,
   options,
-  onClick
+  onClick,
 }: PrimaryDropdownProps) {
   const [isOpen, setIsOpen] = useState(isDropdownInitiallyOpen)
-  const [selected, setSelected] = useState(initialOption)
 
   return (
     <div className={classes.dropdown} onClick={() => setIsOpen(!isOpen)}>
@@ -33,7 +32,7 @@ export default function PrimaryDropdown({
               <div
                 className={classes.dropdownText}
                 key={option}
-                onClick={() => setSelected(option)}
+                onClick={() => onClick(option)}
               >
                 {option}
               </div>

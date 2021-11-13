@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { dateToString } from 'utils'
 import CalendarDropdown from './Dropdowns/CalendarDropdown'
 import PrimaryDropdown from './Dropdowns/PrimaryDropdown'
 import classes from './styles.module.scss'
@@ -23,7 +24,7 @@ export default function Filter() {
     setToDate(value)
   }
   const onGenerateHandler = (): void => {
-    console.log(project, gateway, fromDate, toDate)
+    console.log(project, gateway, dateToString(fromDate), dateToString(toDate))
   }
 
   return (
@@ -37,28 +38,26 @@ export default function Filter() {
       <div className={classes.filterDropdownsContainer}>
         <div className={classes.dropdown}>
           <PrimaryDropdown
-            initialOption={project}
+            selected={project}
             options={['option1', 'option2', 'option3']}
             onClick={onProjectClickHandler}
           />
         </div>
         <div className={classes.dropdown}>
           <PrimaryDropdown
-            initialOption={gateway}
+            selected={gateway}
             options={['option1', 'option2', 'option3']}
             onClick={onGatewayClickHandler}
           />
         </div>
         <div className={classes.dropdown}>
           <CalendarDropdown
-            initialText="From date"
             onClick={onFromDateClickHandler}
             selectedDate={fromDate}
           />
         </div>
         <div className={classes.dropdown}>
           <CalendarDropdown
-            initialText="To date"
             onClick={onToDateClickHandler}
             selectedDate={toDate}
           />

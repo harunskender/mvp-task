@@ -3,17 +3,14 @@ import calendarIcon from 'assets/images/calendar.png'
 import classes from '../styles.module.scss'
 import ReactDatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import { dateToString } from 'utils'
 interface CalendarDropdownProps {
   isDropdownInitiallyOpen?: boolean
-  initialDate?: any
-  initialText?: string
   onClick: (s: any) => void
   selectedDate: Date | string
 }
 
 export default function CalendarDropdown({
-  initialDate,
-  initialText,
   onClick,
   selectedDate,
 }: CalendarDropdownProps) {
@@ -36,8 +33,8 @@ interface InitialDropdownButtonProps {
 }
 
 const InitialDropdownButton = forwardRef(
-  ({ value, onClick, selectedDate }: InitialDropdownButtonProps, ref: any) => {
-    const dateText = selectedDate.toLocaleString().split(',')[0]
+  ({ onClick, selectedDate }: InitialDropdownButtonProps, ref: any) => {
+    const dateText = dateToString(selectedDate)
     console.log(dateText)
     return (
       <div onClick={onClick} ref={ref}>
