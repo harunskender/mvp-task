@@ -6,7 +6,11 @@ export default function PrivateApp() {
   return (
     <>
       <Navigation />
-      <Dropdown initialOption="Project 1" variant="primary" />
+      <Dropdown
+        initialOption="option2"
+        variant="primary"
+        options={['option1', 'option3', 'option2']}
+      />
     </>
   )
 }

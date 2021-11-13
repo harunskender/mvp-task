@@ -1,6 +1,6 @@
 .dropdown {
   width: 118px;
-  height: 32px;
+  min-height: 32px;
   background-color: #1bc5bd;
   position: relative;
   display: flex;
@@ -16,5 +16,12 @@
     img {
       width: 100%;
     }
+  }
+  .dropdownText {
+    padding: 6px;
+  }
+  .dropdownText:hover,
+  .dropdownImageContainer img:hover {
+    cursor: pointer;
   }
 }

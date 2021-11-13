@@ -9,6 +9,7 @@ interface DropdownProps {
   isDropdownInitiallyOpen?: boolean
   initialOption: string
   variant: variantType
+  options: string[]
 }
 
 const VARIANT_TYPES = {
@@ -20,6 +21,7 @@ export default function Dropdown({
   isDropdownInitiallyOpen = false,
   initialOption,
   variant,
+  options,
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(isDropdownInitiallyOpen)
   const [selected, setSelected] = useState(initialOption)
@@ -28,14 +30,35 @@ export default function Dropdown({
     variant === VARIANT_TYPES.PRIMARY
 
   return (
-    <div className={classes.dropdown}>
-      <div className={classes.dropdownText}>{selected}</div>
-      <div className={classes.dropdownImageContainer}>
-        <img
-          alt="dropdown-icon"
-          src={isPrimaryType(variant) ? arrowIcon : calendarIcon}
-        />
-      </div>
+    <div className={classes.dropdown} onClick={() => setIsOpen(!isOpen)}>
+      {!isOpen ? (
+        <div>
+          <div className={classes.dropdownText}>{selected}</div>
+          <div className={classes.dropdownImageContainer}>
+            <img
+              alt="dropdown-icon"
+              src={isPrimaryType(variant) ? arrowIcon : calendarIcon}
+            />
+          </div>
+        </div>
+      ) : (
+        <div>
+          {options
+            .reduce((acc: string[], option: string) => {
+              if (selected === option) return [selected, ...acc]
+              return [...acc, option]
+            }, [])
+            .map((option) => (
+              <div
+                className={classes.dropdownText}
+                key={option}
+                onClick={() => setSelected(option)}
+              >
+                {option}
+              </div>
+            ))}
+        </div>
+      )}
     </div>
   )
 }
