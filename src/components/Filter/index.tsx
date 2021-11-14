@@ -2,7 +2,6 @@ import React from 'react'
 import CalendarDropdown from './Dropdowns/CalendarDropdown'
 import PrimaryDropdown from './Dropdowns/PrimaryDropdown'
 import classes from './styles.module.scss'
-import useFilter from './useFilter'
 
 interface ProjectProps {
   description: string
@@ -30,22 +29,41 @@ interface GatewayProps {
 interface FilterProps {
   projects: ProjectProps[]
   gateways: GatewayProps[]
+  project: string
+  gateway: string
+  fromDate: string | Date
+  toDate: string | Date
+  onProjectClickHandler: (p: string) => void
+  onGatewayClickHandler: (p: string) => void
+  onFromDateClickHandler: (p: Date) => void
+  onToDateClickHandler: (p: Date) => void
+  onGenerateHandler: () => void
+  isLoadingProjects: boolean
+  isLoadingGateways: boolean
 }
 
-export default function Filter({ projects, gateways }: FilterProps) {
-  const {
-    project,
-    gateway,
-    fromDate,
-    toDate,
-    onProjectClickHandler,
-    onGatewayClickHandler,
-    onFromDateClickHandler,
-    onToDateClickHandler,
-    onGenerateHandler,
-  } = useFilter()
+export default function Filter({
+  projects,
+  gateways,
+  project,
+  gateway,
+  fromDate,
+  toDate,
+  onProjectClickHandler,
+  onGatewayClickHandler,
+  onFromDateClickHandler,
+  onToDateClickHandler,
+  onGenerateHandler,
+  isLoadingProjects,
+  isLoadingGateways,
+}: FilterProps) {
+  if (isLoadingProjects && isLoadingGateways)
+    return <div className={classes.loadingSpinner}></div>
 
-  return (
+  const projectOptions = projects?.map((project) => project.name)
+  const gatewayOptions = gateways?.map((gateway) => gateway.name)
+
+  return projects?.length ? (
     <div className={classes.filterContainer}>
       <div>
         <div className={classes.filterTitle}>Reports</div>
@@ -57,20 +75,14 @@ export default function Filter({ projects, gateways }: FilterProps) {
         <div className={classes.dropdown}>
           <PrimaryDropdown
             selected={project}
-            options={[
-              'All projects',
-              ...projects.map((project) => project.name),
-            ]}
+            options={projectOptions}
             onClick={onProjectClickHandler}
           />
         </div>
         <div className={classes.dropdown}>
           <PrimaryDropdown
             selected={gateway}
-            options={[
-              'All projects',
-              ...gateways.map((gateway) => gateway.name),
-            ]}
+            options={gatewayOptions}
             onClick={onGatewayClickHandler}
           />
         </div>
@@ -93,5 +105,7 @@ export default function Filter({ projects, gateways }: FilterProps) {
         </div>
       </div>
     </div>
+  ) : (
+    <></>
   )
 }
