@@ -1,0 +1,21 @@
+.table {
+  width: 100%;
+  tr {
+    &:nth-child(2n-1) {
+      background-color: white;
+    }
+
+    td,
+    th {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      text-align: center;
+      &:first-child {
+        text-align: left;
+      }
+      &:last-child {
+        text-align: right;
+      }
+    }
+  }
+}

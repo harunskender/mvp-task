@@ -1,8 +1,8 @@
 .filterContainer {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding-left: 60px;
   .filterDropdownsContainer {
     display: flex;
     .dropdown {
@@ -29,7 +29,6 @@
     color: #7e8299;
   }
   .generateButton {
-    width: 118px;
     min-height: 32px;
     background: #005b96;
     border-radius: 5px;
