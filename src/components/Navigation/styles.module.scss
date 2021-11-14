@@ -1,0 +1,12 @@
+.navigationContainer {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 80px;
+  .navigationItem {
+    padding: 16px;
+  }
+}
+img:hover {
+  width: 42px;
+}

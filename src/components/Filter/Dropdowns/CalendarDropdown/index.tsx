@@ -35,7 +35,6 @@ interface InitialDropdownButtonProps {
 const InitialDropdownButton = forwardRef(
   ({ onClick, selectedDate }: InitialDropdownButtonProps, ref: any) => {
     const dateText = dateToString(selectedDate)
-    console.log(dateText)
     return (
       <div onClick={onClick} ref={ref}>
         <div className={classes.dropdownText}>{dateText}</div>

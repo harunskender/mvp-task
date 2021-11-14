@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { dateToString } from 'utils'
+// import { dateToString } from 'utils'
 
 export default function useFilter() {
   const [project, setProject] = useState('All projects')
@@ -22,7 +22,7 @@ export default function useFilter() {
     setToDate(value)
   }
   const onGenerateHandler = (): void => {
-    console.log(project, gateway, dateToString(fromDate), dateToString(toDate))
+    // console.log(project, gateway, dateToString(fromDate), dateToString(toDate))
   }
   return {
     project,

@@ -3,6 +3,7 @@ import CalendarDropdown from './Dropdowns/CalendarDropdown'
 import PrimaryDropdown from './Dropdowns/PrimaryDropdown'
 import classes from './styles.module.scss'
 import useFilter from './useFilter'
+
 export default function Filter() {
   const {
     project,
