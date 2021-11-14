@@ -2,29 +2,7 @@ import React from 'react'
 import CalendarDropdown from './Dropdowns/CalendarDropdown'
 import PrimaryDropdown from './Dropdowns/PrimaryDropdown'
 import classes from './styles.module.scss'
-
-interface ProjectProps {
-  description: string
-  gatewayIds: string[]
-  image: string
-  industry: string
-  name: string
-  projectId: string
-  rule: string
-  structure: string
-  userIds: string[]
-  website: string
-}
-
-interface GatewayProps {
-  apiKey: string
-  description: string
-  gatewayId: string
-  name: string
-  secondaryApiKey: string
-  type: string
-  userIds: string[]
-}
+import { ProjectProps, GatewayProps } from 'models/project'
 
 interface FilterProps {
   projects: ProjectProps[]

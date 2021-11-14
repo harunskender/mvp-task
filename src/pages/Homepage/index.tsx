@@ -4,7 +4,6 @@ import useHomepage from './useHomepage'
 import classes from './styles.module.scss'
 import ProjectReports from 'components/ProjectReports'
 import useFilter from 'components/Filter/useFilter'
-
 export default function Homepage() {
   const { projects, gateways, isLoadingProjects, isLoadingGateways } =
     useHomepage()
@@ -18,8 +17,8 @@ export default function Homepage() {
     onFromDateClickHandler,
     onToDateClickHandler,
     onGenerateHandler,
-  } = useFilter()
-  
+  } = useFilter({ projects, gateways })
+
   return (
     <div className={classes.homepageContainer}>
       <Filter
@@ -40,7 +39,10 @@ export default function Homepage() {
       {/* Ako je odabran specifican projekat (tj. ako nisu odabrani svi projekti)
         onda ne treba slati showToggleButtons,
         u suprotnom, treba slati showToggleButtons*/}
-      <ProjectReports showToggleButton projectsDetails={[]} />
+      <ProjectReports
+        showToggleButton={project !== 'All projects'}
+        projectsDetails={[]}
+      />
     </div>
   )
 }
