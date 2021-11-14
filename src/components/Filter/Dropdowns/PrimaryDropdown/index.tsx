@@ -5,8 +5,8 @@ import classes from '../styles.module.scss'
 interface PrimaryDropdownProps {
   isDropdownInitiallyOpen?: boolean
   selected: string
-  options: string[],
-  onClick:(s:string) => void,
+  options: string[]
+  onClick: (s: string) => void
 }
 
 export default function PrimaryDropdown({
