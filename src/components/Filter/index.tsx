@@ -4,7 +4,12 @@ import PrimaryDropdown from './Dropdowns/PrimaryDropdown'
 import classes from './styles.module.scss'
 import useFilter from './useFilter'
 
-export default function Filter() {
+interface FilterProps {
+  projects: object
+  gateways: object
+}
+
+export default function Filter({ projects, gateways }: FilterProps) {
   const {
     project,
     gateway,
@@ -16,6 +21,8 @@ export default function Filter() {
     onToDateClickHandler,
     onGenerateHandler,
   } = useFilter()
+  console.log(projects)
+  console.log(gateways)
   return (
     <div className={classes.filterContainer}>
       <div>
