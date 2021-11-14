@@ -2,7 +2,7 @@ import { ReactComponent as CompanyLogo } from 'assets/icons/logo.svg'
 import { ReactComponent as HamburgerIcon } from 'assets/icons/hamburger-icon.svg'
 import classes from './styles.module.scss'
 
-export default function Navigation() {
+export default function Header() {
   return (
     <div className={classes.navigationContainer}>
       <div className={classes.firstPartOfNavigation}>
