@@ -4,9 +4,32 @@ import PrimaryDropdown from './Dropdowns/PrimaryDropdown'
 import classes from './styles.module.scss'
 import useFilter from './useFilter'
 
+interface ProjectProps {
+  description: string
+  gatewayIds: string[]
+  image: string
+  industry: string
+  name: string
+  projectId: string
+  rule: string
+  structure: string
+  userIds: string[]
+  website: string
+}
+
+interface GatewayProps {
+  apiKey: string
+  description: string
+  gatewayId: string
+  name: string
+  secondaryApiKey: string
+  type: string
+  userIds: string[]
+}
+
 interface FilterProps {
-  projects: object
-  gateways: object
+  projects: ProjectProps[]
+  gateways: GatewayProps[]
 }
 
 export default function Filter({ projects, gateways }: FilterProps) {
@@ -21,8 +44,7 @@ export default function Filter({ projects, gateways }: FilterProps) {
     onToDateClickHandler,
     onGenerateHandler,
   } = useFilter()
-  console.log(projects)
-  console.log(gateways)
+
   return (
     <div className={classes.filterContainer}>
       <div>
@@ -35,14 +57,20 @@ export default function Filter({ projects, gateways }: FilterProps) {
         <div className={classes.dropdown}>
           <PrimaryDropdown
             selected={project}
-            options={['option1', 'option2', 'option3']}
+            options={[
+              'All projects',
+              ...projects.map((project) => project.name),
+            ]}
             onClick={onProjectClickHandler}
           />
         </div>
         <div className={classes.dropdown}>
           <PrimaryDropdown
             selected={gateway}
-            options={['option1', 'option2', 'option3']}
+            options={[
+              'All projects',
+              ...gateways.map((gateway) => gateway.name),
+            ]}
             onClick={onGatewayClickHandler}
           />
         </div>

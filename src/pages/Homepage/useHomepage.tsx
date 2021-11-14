@@ -11,8 +11,6 @@ export default function useHomepage() {
     GATEWAY_QUERY_KEY,
     getGateways
   )
-  console.log(projectsData)
-  console.log(gatewaysData)
   const projects = projectsData?.data?.data
   const gateways = gatewaysData?.data?.data
 
