@@ -3,12 +3,22 @@ import { useState } from 'react'
 import { useMutation } from 'react-query'
 import { dateToString } from 'utils'
 import { ProjectProps, GatewayProps } from 'models/project'
-interface useFilterProps {
+
+interface UseFilterProps {
   projects: ProjectProps[]
   gateways: GatewayProps[]
 }
+interface IReportsData {
+  amount: number
+  created: string
+  gatewayId: string
+  modified: string
+  paymentId: string
+  projectId: string
+  userIds: string[]
+}
 
-export default function useFilter({ projects, gateways }: useFilterProps) {
+export default function useFilter({ projects, gateways }: UseFilterProps) {
   const [project, setProject] = useState('All projects')
   const [gateway, setGateway] = useState('All gateways')
   const [fromDate, setFromDate] = useState<Date | string>(
@@ -48,7 +58,7 @@ export default function useFilter({ projects, gateways }: useFilterProps) {
       mutate(body)
     }
   }
-
+  const reportsData: IReportsData[] | undefined = mutateReportsData?.data?.data
   return {
     project,
     gateway,
@@ -59,6 +69,6 @@ export default function useFilter({ projects, gateways }: useFilterProps) {
     onFromDateClickHandler,
     onToDateClickHandler,
     onGenerateHandler,
-    mutateReportsData
+    reportsData,
   }
 }

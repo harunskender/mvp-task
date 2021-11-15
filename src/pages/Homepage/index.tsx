@@ -17,8 +17,14 @@ export default function Homepage() {
     onFromDateClickHandler,
     onToDateClickHandler,
     onGenerateHandler,
+    reportsData,
   } = useFilter({ projects, gateways })
-
+  const reports = reportsData?.map((report) => ({
+    date: report.created,
+    gateway,
+    transactionId: report.paymentId,
+    amount: { amount: report.amount, currency: 'USD' },
+  }))
   return (
     <div className={classes.homepageContainer}>
       <Filter
@@ -36,12 +42,10 @@ export default function Homepage() {
         isLoadingProjects={isLoadingProjects}
         isLoadingGateways={isLoadingGateways}
       />
-      {/* Ako je odabran specifican projekat (tj. ako nisu odabrani svi projekti)
-        onda ne treba slati showToggleButtons,
-        u suprotnom, treba slati showToggleButtons*/}
       <ProjectReports
-        showToggleButton={project !== 'All projects'}
-        projectsDetails={[]}
+        showToggleButton
+        projectsDetails={reports}
+        showGateways={true}
       />
     </div>
   )
