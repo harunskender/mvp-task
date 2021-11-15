@@ -1,6 +1,6 @@
 import { getGateways, getProjects } from 'api'
 import { PROJECT_QUERY_KEY, GATEWAY_QUERY_KEY } from 'consts'
-import { useQuery, UseQueryResult } from 'react-query'
+import { useQuery } from 'react-query'
 import { ProjectProps, GatewayProps } from 'models/project'
 
 export default function useHomepage() {

@@ -1,7 +1,6 @@
 import { mutateReports } from 'api'
 import { useState } from 'react'
 import { useMutation } from 'react-query'
-import { dateToString } from 'utils'
 import { ProjectProps, GatewayProps } from 'models/project'
 
 interface UseFilterProps {
@@ -48,12 +47,17 @@ export default function useFilter({ projects, gateways }: UseFilterProps) {
       (g: GatewayProps) => g.name === gateway
     )?.gatewayId
 
-    if (typeof projectId !== 'undefined' && typeof gatewayId !== 'undefined') {
+    if (
+      typeof projectId !== 'undefined' &&
+      typeof gatewayId !== 'undefined' &&
+      typeof fromDate !== 'string' &&
+      typeof toDate !== 'string'
+    ) {
       const body = {
         projectId,
         gatewayId,
-        from: dateToString(fromDate),
-        to: dateToString(toDate),
+        from: fromDate.toISOString().split('T')[0],
+        to: toDate.toISOString().split('T')[0],
       }
       mutate(body)
     }

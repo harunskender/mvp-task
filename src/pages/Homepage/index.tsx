@@ -25,6 +25,8 @@ export default function Homepage() {
     transactionId: report.paymentId,
     amount: { amount: report.amount, currency: 'USD' },
   }))
+  console.log(reports)
+
   return (
     <div className={classes.homepageContainer}>
       <Filter

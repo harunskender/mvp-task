@@ -13,7 +13,6 @@ export default function ProjectReports({
   projectsDetails = [],
   showGateways,
 }: IProjectReports) {
-  console.log(projectsDetails)
   return (
     <div className={classes.reports}>
       <div className={classes.activeFilters}>project | gateway</div>

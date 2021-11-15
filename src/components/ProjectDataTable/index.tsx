@@ -13,12 +13,14 @@ export default function ProjectDataTable({
   console.warn(classes)
   return (
     <table className={classes.table}>
-      <tr>
-        <th>Date</th>
-        {showGateways && <th>Gateway</th>}
-        <th>TransactionID</th>
-        <th>Amount</th>
-      </tr>
+      <tbody>
+        <tr>
+          <th>Date</th>
+          {showGateways && <th>Gateway</th>}
+          <th>TransactionID</th>
+          <th>Amount</th>
+        </tr>
+      </tbody>
       {projectData.map((data, i) => (
         <tr key={`${data.date}_${i}`}>
           <td>{data.date}</td>

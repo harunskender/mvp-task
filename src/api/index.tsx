@@ -15,8 +15,5 @@ export function getUsers() {
 }
 
 export function mutateReports(body: mutateReportsBody) {
-  //console.log(body)
-  body.from = '1998-01-01'
-  body.to = '2022-01-01'
   return axios.post(BASE_URL + '/report', body)
 }
