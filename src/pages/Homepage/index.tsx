@@ -23,7 +23,6 @@ export default function Homepage() {
     memoizedFilteredProjects,
     didUserChoose,
   } = useFilter({ projects, gateways })
-  // const allReports;
   const reports = reportsData?.map((report) => ({
     date: report.created,
     gateway,
@@ -34,6 +33,45 @@ export default function Homepage() {
   const allProjects: any | [] = memoizedFilteredProjects
     ? Object.values(memoizedFilteredProjects)
     : []
+  const getChartData = () => {
+    const chartData: any = {}
+    allProjects.forEach((projectsArray: any) => {
+      projectsArray.forEach((project: any) => {
+        if (chartData.hasOwnProperty(project.projectId)) {
+          chartData[project.projectId] = {
+            ...chartData[project.projectId],
+            totalAmount:
+              chartData[project.projectId].totalAmount + project.amount,
+          }
+        } else {
+          const foundP = projects.find((p) => p.projectId === project.projectId)
+          chartData[project.projectId] = {
+            projectName: foundP?.name,
+            totalAmount: project.amount,
+          }
+        }
+      })
+    })
+    return chartData
+  }
+
+  const chartData = getChartData()
+
+  let chartDataProp: any = { projectNames: [], projectAmounts: [] }
+  if (chartData) {
+    const projectNames = Object.keys(chartData).map(
+      (k) => chartData[k].totalAmount
+    )
+    const projectAmounts = Object.keys(chartData).map(
+      (k) => chartData[k].projectName
+    )
+    if (projectNames?.length && projectAmounts?.length) {
+      console.log(projectNames)
+      console.log(projectAmounts)
+      chartDataProp.projectNames = { ...projectNames }
+      chartDataProp.projectAmounts = { ...projectAmounts }
+    }
+  }
 
   return (
     <div className={classes.homepageContainer}>
@@ -72,30 +110,19 @@ export default function Homepage() {
                 projectsDetails={projectsDetails}
                 showGateways={true}
                 projectName={project}
+                key={projectsDetails[0].transactionId}
               />
             )
           })}
+          <ProjectCharts projects={chartDataProp} />
         </div>
       ) : (
         <div>NIJE</div>
       )}
-      {/* <ProjectCharts /> */}
     </div>
   )
 }
-// amount: 1779.41
-// created: "2021-07-22"
-// gatewayId: "i6ssp"
-// modified: "2021-03-01"
-// paymentId: "6149cf5632f0bb5b47d428e8"
-// projectId: "ERdPQ"
-// userIds: ['rahej']
-
-// interface ProjectProps {
-//   projectNames: string[]
-//   projectAmounts: number[]
-// }
-
-// interface ProjectChartsProps {
-//   projects: ProjectProps
-// }
+interface ProjectProps {
+  projectNames: string[]
+  projectAmounts: number[]
+}
