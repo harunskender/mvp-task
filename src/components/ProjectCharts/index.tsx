@@ -1,3 +1,4 @@
+import { bgColors, borderColors } from 'consts'
 import React from 'react'
 import { Doughnut } from 'react-chartjs-2'
 import classes from './styles.module.scss'
@@ -12,30 +13,18 @@ interface ProjectChartsProps {
 }
 
 export default function ProjectCharts({ projects }: ProjectChartsProps) {
+  console.log(Object.values(projects.projectNames))
+
   return (
     <div className={classes.projectChartsContainer}>
       <Doughnut
         data={{
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          labels: Object.values(projects.projectAmounts),
           datasets: [
             {
-              data: [112, 19, 3, 5, 2, 3],
-              backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-              ],
-              borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)',
-              ],
+              data: Object.values(projects.projectNames),
+              backgroundColor: bgColors,
+              borderColor: borderColors,
               borderWidth: 1,
             },
           ],
