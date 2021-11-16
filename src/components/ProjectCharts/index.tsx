@@ -1,5 +1,5 @@
-import { bgColors, borderColors } from 'consts'
 import React from 'react'
+import { bgColors, borderColors } from 'consts'
 import { Doughnut } from 'react-chartjs-2'
 import classes from './styles.module.scss'
 
@@ -13,8 +13,6 @@ interface ProjectChartsProps {
 }
 
 export default function ProjectCharts({ projects }: ProjectChartsProps) {
-  console.log(Object.values(projects.projectNames))
-
   return (
     <div className={classes.projectChartsContainer}>
       <Doughnut

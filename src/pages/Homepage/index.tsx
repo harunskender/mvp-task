@@ -25,7 +25,7 @@ export default function Homepage() {
   } = useFilter({ projects, gateways })
   const reports = reportsData?.map((report) => ({
     date: report.created,
-    gateway,
+    gateway: report.gatewayId,
     transactionId: report.paymentId,
     amount: { amount: report.amount, currency: 'USD' },
   }))
@@ -66,8 +66,6 @@ export default function Homepage() {
       (k) => chartData[k].projectName
     )
     if (projectNames?.length && projectAmounts?.length) {
-      console.log(projectNames)
-      console.log(projectAmounts)
       chartDataProp.projectNames = { ...projectNames }
       chartDataProp.projectAmounts = { ...projectAmounts }
     }
@@ -95,7 +93,7 @@ export default function Homepage() {
           <div
             className={classes.activeFilters}
           >{`${project} | ${gateway}`}</div>
-          {allProjects.map((projectInfo: any) => {
+          {allProjects.map((projectInfo: any, i: number) => {
             const projectsDetails = projectInfo.map((p: any) => {
               return {
                 date: p.created,
@@ -109,20 +107,23 @@ export default function Homepage() {
                 showToggleButton
                 projectsDetails={projectsDetails}
                 showGateways={true}
-                projectName={project}
+                projectName={chartDataProp?.projectAmounts[i]}
                 key={projectsDetails[0].transactionId}
               />
             )
           })}
           <ProjectCharts projects={chartDataProp} />
         </div>
+      ) : didUserChoose() ? (
+        <ProjectReports
+          showToggleButton
+          projectsDetails={reports}
+          showGateways={true}
+          projectName={project}
+        />
       ) : (
-        <div>NIJE</div>
+        <div>Nije</div>
       )}
     </div>
   )
-}
-interface ProjectProps {
-  projectNames: string[]
-  projectAmounts: number[]
 }

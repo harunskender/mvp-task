@@ -99,8 +99,8 @@ export default function useFilter({ projects, gateways }: UseFilterProps) {
       fromDate !== INITIAL_SELECTED_FROM_DATE
     )
   }
-
   const reportsData: IReportsData[] | undefined = mutateReportsData?.data?.data
+
   return {
     project,
     gateway,
