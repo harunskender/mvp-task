@@ -18,6 +18,7 @@ const INITIAL_SELECTED_FROM_DATE = 'From date'
 export default function useFilter({ projects, gateways }: UseFilterProps) {
   const [project, setProject] = useState(INITIAL_SELECTED_PROJECT)
   const [gateway, setGateway] = useState(INITIAL_SELECTED_GATEWAY)
+  const [generated, setGenerated] = useState(false)
   const [fromDate, setFromDate] = useState<Date | string>(
     INITIAL_SELECTED_FROM_DATE || new Date()
   )
@@ -77,6 +78,7 @@ export default function useFilter({ projects, gateways }: UseFilterProps) {
         to: toDate.toISOString().split('T')[0],
       }
       mutate(body)
+      setGenerated(true)
     }
   }
 
@@ -96,7 +98,8 @@ export default function useFilter({ projects, gateways }: UseFilterProps) {
       project !== INITIAL_SELECTED_PROJECT &&
       gateway !== INITIAL_SELECTED_GATEWAY &&
       toDate !== INITIAL_SELECTED_TO_DATE &&
-      fromDate !== INITIAL_SELECTED_FROM_DATE
+      fromDate !== INITIAL_SELECTED_FROM_DATE &&
+      generated
     )
   }
   const reportsData: IReportsData[] | undefined = mutateReportsData?.data?.data

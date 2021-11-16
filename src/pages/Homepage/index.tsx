@@ -5,7 +5,8 @@ import classes from './styles.module.scss'
 import ProjectReports from 'components/ProjectReports'
 import useFilter from 'components/Filter/useFilter'
 import ProjectCharts from 'components/ProjectCharts'
-import { IReportsData } from 'models/project'
+import noReportsImage from 'assets/images/no-reports.png'
+
 export default function Homepage() {
   const { projects, gateways, isLoadingProjects, isLoadingGateways } =
     useHomepage()
@@ -89,29 +90,29 @@ export default function Homepage() {
         isLoadingGateways={isLoadingGateways}
       />
       {project === 'All projects' ? (
-        <div>
-          <div
-            className={classes.activeFilters}
-          >{`${project} | ${gateway}`}</div>
-          {allProjects.map((projectInfo: any, i: number) => {
-            const projectsDetails = projectInfo.map((p: any) => {
-              return {
-                date: p.created,
-                amount: { amount: p.amount, currency: 'USD' },
-                gateway: p.gatewayId,
-                transactionId: p.paymentId,
-              }
-            })
-            return (
-              <ProjectReports
-                showToggleButton
-                projectsDetails={projectsDetails}
-                showGateways={true}
-                projectName={chartDataProp?.projectAmounts[i]}
-                key={projectsDetails[0].transactionId}
-              />
-            )
-          })}
+        <div className={classes.container}>
+          <div className={classes.activeProjects}>
+            {allProjects.map((projectInfo: any, i: number) => {
+              const projectsDetails = projectInfo.map((p: any) => {
+                return {
+                  date: p.created,
+                  amount: { amount: p.amount, currency: 'USD' },
+                  gateway: p.gatewayId,
+                  transactionId: p.paymentId,
+                }
+              })
+              return (
+                <ProjectReports
+                  showToggleButton
+                  projectsDetails={projectsDetails}
+                  showGateways={true}
+                  projectName={chartDataProp?.projectAmounts[i]}
+                  key={projectsDetails[0].transactionId}
+                />
+              )
+            })}
+          </div>
+
           <ProjectCharts projects={chartDataProp} />
         </div>
       ) : didUserChoose() ? (
@@ -122,7 +123,17 @@ export default function Homepage() {
           projectName={project}
         />
       ) : (
-        <div>Nije</div>
+        <div>
+          <div className={classes.imageContainer}>
+            <div className={classes.noReportTitle}>No reports</div>
+            <p className={classes.noReportsText}>
+              Currently you have no data for the reports to be generated. Once
+              you start generating traffic through the Balance application the
+              reports will be shown.
+            </p>
+            <img src={noReportsImage} alt="no-reports" />
+          </div>
+        </div>
       )}
     </div>
   )
