@@ -37,9 +37,10 @@ export default function Filter({
 }: FilterProps) {
   if (isLoadingProjects && isLoadingGateways)
     return <div className={classes.loadingSpinner}></div>
-
   const projectOptions = projects?.map((project) => project.name)
-  const gatewayOptions = gateways?.map((gateway) => gateway.name)
+  const gatewayOptions = gateways
+    ? gateways?.map((gateway) => gateway.name)
+    : []
 
   return projects?.length ? (
     <div className={classes.filterContainer}>
@@ -53,14 +54,14 @@ export default function Filter({
         <div className={classes.dropdown}>
           <PrimaryDropdown
             selected={project}
-            options={projectOptions}
+            options={['All projects', ...projectOptions]}
             onClick={onProjectClickHandler}
           />
         </div>
         <div className={classes.dropdown}>
           <PrimaryDropdown
             selected={gateway}
-            options={gatewayOptions}
+            options={['All gateways', ...gatewayOptions]}
             onClick={onGatewayClickHandler}
           />
         </div>

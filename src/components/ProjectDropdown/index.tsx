@@ -36,7 +36,7 @@ export default function ProjectDropdown({
       {showToggleButton && (
         <div onClick={toggle} className={classes.toggleButton}>
           <div>{projectName}</div>
-          <div>Total: {`${amount.amount} ${amount.currency}`}</div>
+          <div>Total: {`${Math.round(amount.amount)} ${amount.currency}`}</div>
         </div>
       )}
 

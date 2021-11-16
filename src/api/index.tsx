@@ -17,3 +17,6 @@ export function getUsers() {
 export function mutateReports(body: mutateReportsBody) {
   return axios.post(BASE_URL + '/report', body)
 }
+export function getAllReports() {
+  return axios.post(BASE_URL + '/report', {})
+}

@@ -38,3 +38,13 @@ export interface mutateReportsBody {
   projectId: string
   gatewayId: string
 }
+
+export interface IReportsData {
+  amount: number
+  created: string
+  gatewayId: string
+  modified: string
+  paymentId: string
+  projectId: string
+  userIds: string[]
+}

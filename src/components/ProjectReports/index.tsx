@@ -6,19 +6,20 @@ interface IProjectReports {
   showToggleButton?: boolean
   projectsDetails: Array<IProjectDetails> | undefined
   showGateways: boolean
+  projectName: string
 }
 
 export default function ProjectReports({
   showToggleButton,
   projectsDetails = [],
   showGateways,
+  projectName,
 }: IProjectReports) {
   return (
     <div className={classes.reports}>
-      <div className={classes.activeFilters}>project | gateway</div>
       <ProjectDropdown
         showToggleButton={showToggleButton}
-        projectName="Project 1"
+        projectName={projectName}
         projectData={projectsDetails}
         showGateways={showGateways}
       />

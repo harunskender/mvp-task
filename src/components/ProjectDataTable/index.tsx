@@ -10,7 +10,6 @@ export default function ProjectDataTable({
   projectData,
   showGateways = false,
 }: IProjectDataTable) {
-  console.warn(classes)
   return (
     <table className={classes.table}>
       <tbody>
@@ -26,7 +25,9 @@ export default function ProjectDataTable({
           <td>{data.date}</td>
           {showGateways && <td>{data.gateway}</td>}
           <td>{data.transactionId}</td>
-          <td>{`${data.amount.amount} ${data.amount.currency}`}</td>
+          <td>{`${data.amount.amount.toString().split('.')[0]} ${
+            data.amount.currency
+          }`}</td>
         </tr>
       ))}
     </table>

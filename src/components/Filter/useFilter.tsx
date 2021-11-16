@@ -1,29 +1,29 @@
-import { mutateReports } from 'api'
+import { SetStateAction, useEffect, useMemo } from 'react'
+import { mutateReports, getAllReports } from 'api'
 import { useState } from 'react'
 import { useMutation } from 'react-query'
 import { ProjectProps, GatewayProps } from 'models/project'
+import { IReportsData } from 'models/project'
 
 interface UseFilterProps {
   projects: ProjectProps[]
   gateways: GatewayProps[]
 }
-interface IReportsData {
-  amount: number
-  created: string
-  gatewayId: string
-  modified: string
-  paymentId: string
-  projectId: string
-  userIds: string[]
-}
+
+const INITIAL_SELECTED_PROJECT = 'Select project'
+const INITIAL_SELECTED_GATEWAY = 'Select project'
+const INITIAL_SELECTED_TO_DATE = 'To date'
+const INITIAL_SELECTED_FROM_DATE = 'From date'
 
 export default function useFilter({ projects, gateways }: UseFilterProps) {
-  const [project, setProject] = useState('All projects')
-  const [gateway, setGateway] = useState('All gateways')
+  const [project, setProject] = useState(INITIAL_SELECTED_PROJECT)
+  const [gateway, setGateway] = useState(INITIAL_SELECTED_GATEWAY)
   const [fromDate, setFromDate] = useState<Date | string>(
-    'From date' || new Date()
+    INITIAL_SELECTED_FROM_DATE || new Date()
   )
-  const [toDate, setToDate] = useState<Date | string>('To date' || new Date())
+  const [toDate, setToDate] = useState<Date | string>(
+    INITIAL_SELECTED_TO_DATE || new Date()
+  )
 
   const onProjectClickHandler = (value: string): void => {
     setProject(value)
@@ -37,8 +37,25 @@ export default function useFilter({ projects, gateways }: UseFilterProps) {
   const onToDateClickHandler = (value: Date): void => {
     setToDate(value)
   }
+  const [allReportsData, setAllReportsData] = useState<
+    IReportsData[] | undefined
+  >(undefined)
   const { mutate, data: mutateReportsData } = useMutation(mutateReports)
 
+  const memoizedFilteredProjects: undefined | Record<string, IReportsData> =
+    useMemo(() => {
+      if (typeof allReportsData !== 'undefined') {
+        const filteredProjects: any = {}
+        allReportsData.forEach((reportData) => {
+          if (filteredProjects.hasOwnProperty(reportData.projectId)) {
+            filteredProjects[reportData.projectId].push({ ...reportData })
+          } else {
+            filteredProjects[reportData.projectId] = []
+          }
+        })
+        return filteredProjects
+      }
+    }, [allReportsData])
   const onGenerateHandler = (): void => {
     const projectId = projects?.find(
       (p: ProjectProps) => p.name === project
@@ -62,6 +79,27 @@ export default function useFilter({ projects, gateways }: UseFilterProps) {
       mutate(body)
     }
   }
+
+  useEffect(() => {
+    async function run() {
+      const { data } = await getAllReports()
+      const allReportsData: IReportsData[] | undefined = data?.data
+
+      setAllReportsData(
+        allReportsData as SetStateAction<IReportsData[] | undefined>
+      )
+    }
+    run()
+  }, [])
+  const didUserChoose = () => {
+    return (
+      project !== INITIAL_SELECTED_PROJECT &&
+      gateway !== INITIAL_SELECTED_GATEWAY &&
+      toDate !== INITIAL_SELECTED_TO_DATE &&
+      fromDate !== INITIAL_SELECTED_FROM_DATE
+    )
+  }
+
   const reportsData: IReportsData[] | undefined = mutateReportsData?.data?.data
   return {
     project,
@@ -74,5 +112,7 @@ export default function useFilter({ projects, gateways }: UseFilterProps) {
     onToDateClickHandler,
     onGenerateHandler,
     reportsData,
+    memoizedFilteredProjects,
+    didUserChoose,
   }
 }

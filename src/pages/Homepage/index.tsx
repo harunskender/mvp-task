@@ -4,6 +4,8 @@ import useHomepage from './useHomepage'
 import classes from './styles.module.scss'
 import ProjectReports from 'components/ProjectReports'
 import useFilter from 'components/Filter/useFilter'
+import ProjectCharts from 'components/ProjectCharts'
+import { IReportsData } from 'models/project'
 export default function Homepage() {
   const { projects, gateways, isLoadingProjects, isLoadingGateways } =
     useHomepage()
@@ -18,14 +20,20 @@ export default function Homepage() {
     onToDateClickHandler,
     onGenerateHandler,
     reportsData,
+    memoizedFilteredProjects,
+    didUserChoose,
   } = useFilter({ projects, gateways })
+  // const allReports;
   const reports = reportsData?.map((report) => ({
     date: report.created,
     gateway,
     transactionId: report.paymentId,
     amount: { amount: report.amount, currency: 'USD' },
   }))
-  console.log(reports)
+
+  const allProjects: any | [] = memoizedFilteredProjects
+    ? Object.values(memoizedFilteredProjects)
+    : []
 
   return (
     <div className={classes.homepageContainer}>
@@ -44,23 +52,50 @@ export default function Homepage() {
         isLoadingProjects={isLoadingProjects}
         isLoadingGateways={isLoadingGateways}
       />
-      <ProjectReports
-        showToggleButton
-        projectsDetails={reports}
-        showGateways={true}
-      />
+      {project === 'All projects' ? (
+        <div>
+          <div
+            className={classes.activeFilters}
+          >{`${project} | ${gateway}`}</div>
+          {allProjects.map((projectInfo: any) => {
+            const projectsDetails = projectInfo.map((p: any) => {
+              return {
+                date: p.created,
+                amount: { amount: p.amount, currency: 'USD' },
+                gateway: p.gatewayId,
+                transactionId: p.paymentId,
+              }
+            })
+            return (
+              <ProjectReports
+                showToggleButton
+                projectsDetails={projectsDetails}
+                showGateways={true}
+                projectName={project}
+              />
+            )
+          })}
+        </div>
+      ) : (
+        <div>NIJE</div>
+      )}
+      {/* <ProjectCharts /> */}
     </div>
   )
 }
+// amount: 1779.41
+// created: "2021-07-22"
+// gatewayId: "i6ssp"
+// modified: "2021-03-01"
+// paymentId: "6149cf5632f0bb5b47d428e8"
+// projectId: "ERdPQ"
+// userIds: ['rahej']
 
-// export interface AmountCurrency {
-//   amount: number
-//   currency: string
+// interface ProjectProps {
+//   projectNames: string[]
+//   projectAmounts: number[]
 // }
 
-// export interface IProjectDetails {
-//   date: string
-//   gateway?: string
-//   transactionId: string
-//   amount: AmountCurrency
+// interface ProjectChartsProps {
+//   projects: ProjectProps
 // }
